@@ -1,0 +1,65 @@
+{
+  "name": "ts-json-generator",
+  "version": "0.1.0",
+  "description": "Generates JSON objects based on JSON schema definition",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seesharpsoft/ts-json-generator.git"
+  },
+  "keywords": [
+    "js",
+    "ts",
+    "json",
+    "schema",
+    "generator"
+  ],
+  "author": {
+    "name": "Martin Sommer",
+    "email": "mail@seesharpsoft.net"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seesharpsoft/ts-json-generator/issues"
+  },
+  "homepage": "https://github.com/seesharpsoft/ts-json-generator",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "dependencies": {
+    "@types/json-schema": "^7.0.7",
+    "regex-to-strings": "^2.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.1",
+    "@babel/preset-env": "^7.13.5",
+    "@babel/preset-typescript": "^7.13.0",
+    "@types/node": "^14.14.34",
+    "@types/jest": "^26.0.20",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
+    "typescript": "^4.2.3",
+    "jest": "^26.6.3",
+    "jest-junit": "^12.0.0",
+    "prettier": "^2.2.1",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:all": "yarn install && yarn build",
+    "test": "jest test/",
+    "test:coverage": "jest test/ --collectCoverage=true",
+    "test:node": "mocha",
+    "lint": "eslint {src,test}/**/*.ts",
+    "format": "yarn lint --fix"
+  }
+}

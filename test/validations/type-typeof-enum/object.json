@@ -1,0 +1,23 @@
+{
+  "fromZero": {
+    "a": 0,
+    "b": 1,
+    "c": 2
+  },
+  "mixedEnum": {
+    "a": 0,
+    "b": 10,
+    "c": 11,
+    "d": "foo"
+  },
+  "someCustomInitializers": {
+    "a": 10,
+    "b": 11,
+    "c": 20,
+    "d": 21
+  },
+  "stringEnum": {
+    "a": "foo",
+    "b": "bar"
+  }
+}
