@@ -25,7 +25,7 @@ export class ObjectGenerator extends TypeGenerator {
 
     protected generateProperties(schema: JSONSchema7, context: NodeVisitor): any {
         const result: any = {};
-        for (const key in Object.keys(schema.properties || {})) {
+        for (const key of Object.keys(schema.properties || {})) {
             result[key] = context.generate("properties/" + key);
         }
         return result;
