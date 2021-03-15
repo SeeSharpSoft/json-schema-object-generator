@@ -14,13 +14,12 @@ on:
 jobs:
   build:
 
+    runs-on: ubuntu-latest
+
     strategy:
       matrix:
         node-version: [10.x, 14.x]
-        os: [ubuntu-latest, windows-latest]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v2
