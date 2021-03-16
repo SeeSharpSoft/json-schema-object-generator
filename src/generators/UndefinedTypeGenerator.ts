@@ -1,17 +1,13 @@
 import { JSONSchema7 } from "json-schema";
 import { NodeVisitor } from "../NodeVisitor";
-import { TypeGenerator } from "./TypeGenerator";
+import { PrimitiveTypeGenerator } from "./PrimitiveTypeGenerator";
 
-export class EmptyTypeGenerator extends TypeGenerator {
+export class EmptyTypeGenerator extends PrimitiveTypeGenerator {
     protected getType(): undefined {
         return undefined;
     }
 
-    protected getEmptyValue(schema: JSONSchema7, context: NodeVisitor): any {
+    protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any {
         return null;
-    }
-
-    protected isPrimitiveType(): boolean {
-        return true;
     }
 }

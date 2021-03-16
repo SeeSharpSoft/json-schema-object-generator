@@ -13,7 +13,7 @@ import { NullTypeGenerator } from "./generators/NullTypeGenerator";
 import { AnyOfGenerator } from "./generators/AnyOfGenerator";
 
 export interface NodeGenerator {
-    generate(schema: JSONSchema7, context: NodeVisitor): any;
+    generate(schema: JSONSchema7, visitor: NodeVisitor): any;
     handles(schema: JSONSchema7, context: NodeVisitor): boolean;
 }
 
@@ -52,16 +52,16 @@ export class BaseNodeGenerator implements NodeGenerator, MutableGenerator {
         this.generators = [];
     }
 
-    handles(schema: JSONSchema7, context: NodeVisitor): boolean {
-        return !!this.findGenerator(schema, context);
+    handles(schema: JSONSchema7, visitor: NodeVisitor): boolean {
+        return !!this.findGenerator(schema, visitor);
     }
 
-    generate(schema: JSONSchema7, context: NodeVisitor): any {
-        return this.findGenerator(schema, context)?.generate(schema, context);
+    generate(schema: JSONSchema7, visitor: NodeVisitor): any {
+        return this.findGenerator(schema, visitor)?.generate(schema, visitor);
     }
 
-    findGenerator(schema: JSONSchema7, context: NodeVisitor): NodeGenerator | undefined {
-        return this.generators.find((generator) => generator.handles(schema, context));
+    findGenerator(schema: JSONSchema7, visitor: NodeVisitor): NodeGenerator | undefined {
+        return this.generators.find((generator) => generator.handles(schema, visitor));
     }
 
     addGenerator(generator: NodeGenerator): void {

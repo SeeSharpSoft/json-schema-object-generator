@@ -2,13 +2,12 @@ import { NodeGenerator } from "../NodeGenerator";
 import { NodeVisitor } from "../NodeVisitor";
 import { JSONSchema7, JSONSchema7TypeName } from "json-schema";
 import { getObjectSchema, getPropertyName, getSchemaType } from "../Utils";
-import { expandN } from "regex-to-strings";
 
 export abstract class TypeGenerator implements NodeGenerator {
     protected abstract isPrimitiveType(): boolean;
     protected abstract getType(): JSONSchema7TypeName | undefined;
-    protected abstract getEmptyValue(schema: JSONSchema7, context: NodeVisitor): any;
-    protected getDefaultValue(schema: JSONSchema7, context: NodeVisitor): any {
+    protected abstract getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any;
+    protected getDefaultValue(schema: JSONSchema7, visitor: NodeVisitor): any {
         if (schema.const !== undefined) {
             return schema.const;
         }
@@ -18,15 +17,12 @@ export abstract class TypeGenerator implements NodeGenerator {
         if (Array.isArray(schema.enum)) {
             return schema.enum[0];
         }
-        if (schema.pattern !== undefined) {
-            return expandN(schema.pattern, 1)[0];
-        }
-        return this.getEmptyValue(schema, context);
+        return this.getEmptyValue(schema, visitor);
     }
-    protected isRequired(schema: JSONSchema7, context: NodeVisitor): boolean {
+    protected isRequired(schema: JSONSchema7, visitor: NodeVisitor): boolean {
         // check: { properties: { <name>: <SCHEMA> }, required: ["<name>"] }
-        const property = getPropertyName(context);
-        const parentSchema = getObjectSchema(context);
+        const property = getPropertyName(visitor);
+        const parentSchema = getObjectSchema(visitor);
         return (
             parentSchema === undefined ||
             property === undefined ||
@@ -35,24 +31,24 @@ export abstract class TypeGenerator implements NodeGenerator {
         );
     }
 
-    handles(schema: JSONSchema7, context: NodeVisitor): boolean {
+    handles(schema: JSONSchema7, visitor: NodeVisitor): boolean {
         const targetType = this.getType();
-        const schemaType = getSchemaType(schema, context);
+        const schemaType = getSchemaType(schema, visitor);
         return schemaType === targetType;
     }
 
-    generate(schema: JSONSchema7, context: NodeVisitor): any {
-        if (schema.const !== undefined && context.getConfig().generateConst === "always") {
+    generate(schema: JSONSchema7, visitor: NodeVisitor): any {
+        if (schema.const !== undefined && visitor.getConfig().generateConst === "always") {
             return schema.const;
         }
-        if (schema.default !== undefined && context.getConfig().generateDefault === "always") {
+        if (schema.default !== undefined && visitor.getConfig().generateDefault === "always") {
             return schema.default;
         }
         if (
-            this.isRequired(schema, context) ||
-            (this.isPrimitiveType() && context.getConfig().generatePrimitives === "always")
+            this.isRequired(schema, visitor) ||
+            (this.isPrimitiveType() && visitor.getConfig().generatePrimitives === "always")
         ) {
-            return this.getDefaultValue(schema, context);
+            return this.getDefaultValue(schema, visitor);
         }
         return undefined;
     }

@@ -9,16 +9,6 @@ export type Config = {
     generateDefault?: "required" | "always";
 };
 
-export type ResolvedConfig = {
-    reflectionName: string;
-    reflectionType: "none" | "property" | "function";
-    typePriorities: Record<JSONSchema7TypeName, number>;
-    fallbackType: JSONSchema7TypeName;
-    generatePrimitives: "required" | "always";
-    generateConst: "required" | "always";
-    generateDefault: "required" | "always";
-};
-
 export const DEFAULT_CONFIG: Config = {
     reflectionName: "$schema",
     reflectionType: "none",
@@ -34,4 +24,8 @@ export const DEFAULT_CONFIG: Config = {
     generatePrimitives: "required",
     generateConst: "required",
     generateDefault: "required",
+};
+
+export type ResolvedConfig = Required<Config> & {
+    fallbackType: JSONSchema7TypeName;
 };

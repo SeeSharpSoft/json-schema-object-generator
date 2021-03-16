@@ -1,0 +1,52 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "simple": {
+          "type": "string"
+        },
+        "enum": {
+          "enum": [
+            "ok",
+            "fail",
+            "abort"
+          ],
+          "type": "string"
+        },
+        "minLength": {
+          "type": "string",
+          "minLength": 2
+        },
+        "regex": {
+          "type": "string",
+          "pattern": "\\w@\\w\\.\\w"
+        },
+        "format-date-time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "format-date": {
+          "type": "string",
+          "format": "date"
+        },
+        "format-time": {
+          "type": "string",
+          "format": "time"
+        }
+      },
+      "required": [
+        "simple",
+        "enum",
+        "minLength",
+        "regex",
+        "format-date-time",
+        "format-date",
+        "format-time"
+      ],
+      "type": "object"
+    }
+  }
+}

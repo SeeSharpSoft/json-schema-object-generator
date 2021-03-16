@@ -8,25 +8,25 @@ export class ObjectGenerator extends TypeGenerator {
         return "object";
     }
 
-    generate(schema: JSONSchema7, context: NodeVisitor): any {
-        let obj = super.generate(schema, context);
+    generate(schema: JSONSchema7, visitor: NodeVisitor): any {
+        let obj = super.generate(schema, visitor);
         if (obj !== undefined) {
             obj = this.applySchema(
                 {
                     ...obj,
-                    ...this.generateProperties(schema, context),
+                    ...this.generateProperties(schema, visitor),
                 },
                 schema,
-                context.getConfig()
+                visitor.getConfig()
             );
         }
         return obj;
     }
 
-    protected generateProperties(schema: JSONSchema7, context: NodeVisitor): any {
+    protected generateProperties(schema: JSONSchema7, visitor: NodeVisitor): any {
         const result: any = {};
         for (const key of Object.keys(schema.properties || {})) {
-            result[key] = context.generate("properties/" + key);
+            result[key] = visitor.generate("properties/" + key);
         }
         return result;
     }
@@ -45,7 +45,7 @@ export class ObjectGenerator extends TypeGenerator {
         return target;
     }
 
-    protected getEmptyValue(schema: JSONSchema7, context: NodeVisitor): any {
+    protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any {
         return {};
     }
 
