@@ -1,1 +1,1 @@
-{"simple":"","enum":"ok","minLength":"ww","regex":"8@E.5","format-date-time":"2021-03-16T23:26:14.833Z","format-date":"2021-03-16","format-time":"23:26:14.833Z"}
+{"simple":"","enum":"ok","minLength":"ww","regex":"0@m.7","format-date-time":"2021-03-17T09:34:16.736Z","format-date":"2021-03-17","format-time":"09:34:16.736Z","format-regex":"[A-Z].+","format-email":"mail@example.org","format-hostname":"localhost","format-ipv4":"127.0.0.1","format-ipv6":"::1","format-uri":"http://example.org/","format-json-pointer":"/foo/bar","format-relative-json-pointer":"0/foo/bar"}

@@ -16,7 +16,7 @@ export class StringGenerator extends PrimitiveTypeGenerator {
             return this.getFormattedValue(schema.format);
         }
         if (schema.minLength !== undefined) {
-            return expandN(RegExp("w{" + schema.minLength + "}"), 1)[0];
+            return expandN(RegExp("\w{" + schema.minLength + "}"), 1)[0];
         }
         return "";
     }
@@ -33,19 +33,26 @@ export class StringGenerator extends PrimitiveTypeGenerator {
                 return "[A-Z].+";
             case "email":
             case "idn-email":
+                return "mail@example.org";
             case "hostname":
             case "idn-hostname":
+                return "localhost";
             case "ipv4":
+                return "127.0.0.1";
             case "ipv6":
+                return "::1";
             case "uri":
             case "uri-reference":
             case "iri":
             case "iri-reference":
             case "uri-template":
+                return "http://example.org/";
             case "json-pointer":
+                return "/foo/bar";
             case "relative-json-pointer":
+                return "0/foo/bar";
             default:
-                throw new Error("unsupported format: " + format);
+                throw new Error("format not yet supported: " + format);
         }
     }
 }

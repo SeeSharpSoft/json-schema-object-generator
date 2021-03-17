@@ -35,6 +35,38 @@
         "format-time": {
           "type": "string",
           "format": "time"
+        },
+        "format-regex": {
+          "type": "string",
+          "format": "regex"
+        },
+        "format-email": {
+          "type": "string",
+          "format": "email"
+        },
+        "format-hostname": {
+          "type": "string",
+          "format": "hostname"
+        },
+        "format-ipv4": {
+          "type": "string",
+          "format": "ipv4"
+        },
+        "format-ipv6": {
+          "type": "string",
+          "format": "ipv6"
+        },
+        "format-uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "format-json-pointer": {
+          "type": "string",
+          "format": "json-pointer"
+        },
+        "format-relative-json-pointer": {
+          "type": "string",
+          "format": "relative-json-pointer"
         }
       },
       "required": [
@@ -44,7 +76,15 @@
         "regex",
         "format-date-time",
         "format-date",
-        "format-time"
+        "format-time",
+        "format-regex",
+        "format-email",
+        "format-hostname",
+        "format-ipv4",
+        "format-ipv6",
+        "format-uri",
+        "format-json-pointer",
+        "format-relative-json-pointer"
       ],
       "type": "object"
     }
