@@ -16,7 +16,7 @@ export class StringGenerator extends PrimitiveTypeGenerator {
             return this.getFormattedValue(schema.format);
         }
         if (schema.minLength !== undefined) {
-            return expandN(RegExp("\w{" + schema.minLength + "}"), 1)[0];
+            return expandN(RegExp("\\w{" + schema.minLength + "}"), 1)[0];
         }
         return "";
     }
