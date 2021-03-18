@@ -1,10 +1,10 @@
 import { readFileSync, writeFileSync } from "fs";
-import { JsonGenerator } from "../src";
+import { JsonGenerator } from "../index";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 
-export function assertGeneratedJsonObject(relativePath: string): void {
-    const basePath = __dirname + "/validations/" + relativePath;
+export function assertGeneratedJsonObject(relativePath: string, dir = "validations"): void {
+    const basePath = __dirname + "/" + dir + "/" + relativePath;
     const schema = JSON.parse(readFileSync(basePath + "/schema.json", "utf8"));
     let expectedObject = undefined;
     try {

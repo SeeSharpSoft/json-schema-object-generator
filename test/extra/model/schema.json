@@ -1,0 +1,142 @@
+{
+  "$ref": "#/definitions/Model",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ConfigurationModel": {
+      "additionalProperties": false,
+      "properties": {
+        "defaultLanguage": {
+          "$ref": "#/definitions/LanguageKey"
+        }
+      },
+      "required": [
+        "defaultLanguage"
+      ],
+      "type": "object"
+    },
+    "DataModel": {
+      "additionalProperties": false,
+      "properties": {
+        "entities": {
+          "additionalProperties": {
+            "$ref": "#/definitions/EntityModel"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "entities"
+      ],
+      "type": "object"
+    },
+    "EditorModel": {
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "EntityModel": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "properties": {
+          "additionalProperties": {
+            "$ref": "#/definitions/EntityPropertyModel"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "properties"
+      ],
+      "type": "object"
+    },
+    "EntityPropertyModel": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "I18nModel": {
+      "additionalProperties": {
+        "$ref": "#/definitions/I18nTokenModel"
+      },
+      "properties": {
+        "default": {
+          "$ref": "#/definitions/I18nTokenModel"
+        }
+      },
+      "required": [
+        "default"
+      ],
+      "type": "object"
+    },
+    "I18nTokenModel": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "LanguageKey": {
+      "pattern": "\\w{2}(-\\w{2,3})?",
+      "type": "string"
+    },
+    "Model": {
+      "additionalProperties": false,
+      "properties": {
+        "configuration": {
+          "$ref": "#/definitions/ConfigurationModel"
+        },
+        "data": {
+          "$ref": "#/definitions/DataModel"
+        },
+        "i18n": {
+          "$ref": "#/definitions/I18nModel"
+        },
+        "ui": {
+          "$ref": "#/definitions/UIModel"
+        }
+      },
+      "required": [
+        "configuration",
+        "data",
+        "i18n",
+        "ui"
+      ],
+      "type": "object"
+    },
+    "UIModel": {
+      "additionalProperties": false,
+      "properties": {
+        "editors": {
+          "additionalProperties": {
+            "$ref": "#/definitions/EditorModel"
+          },
+          "type": "object"
+        },
+        "views": {
+          "additionalProperties": {
+            "$ref": "#/definitions/ViewModel"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "editors",
+        "views"
+      ],
+      "type": "object"
+    },
+    "ViewModel": {
+      "additionalProperties": false,
+      "type": "object"
+    }
+  }
+}

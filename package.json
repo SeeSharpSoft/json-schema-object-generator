@@ -1,9 +1,9 @@
 {
   "name": "ts-json-generator",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Generates JSON objects based on JSON schema definition",
-  "main": "dist/src/index.js",
-  "typings": "dist/src/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src",
