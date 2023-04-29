@@ -1,7 +1,7 @@
 {
-  "name": "ts-json-generator",
-  "version": "0.4.0",
-  "description": "Generates JSON objects based on JSON schema definition",
+  "name": "json-schema-object-generator",
+  "version": "0.5.0",
+  "description": "Generates plain objects based on JSON schema definition",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/seesharpsoft/ts-json-generator.git"
+    "url": "https://github.com/seesharpsoft/json-schema-object-generator.git"
   },
   "keywords": [
     "js",
@@ -27,9 +27,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/seesharpsoft/ts-json-generator/issues"
+    "url": "https://github.com/seesharpsoft/json-schema-object-generator/issues"
   },
-  "homepage": "https://github.com/seesharpsoft/ts-json-generator",
+  "homepage": "https://github.com/seesharpsoft/json-schema-object-generator",
   "engines": {
     "node": ">=18.0.0"
   },
