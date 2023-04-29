@@ -7,7 +7,8 @@ export abstract class TypeGenerator implements NodeGenerator {
     protected abstract isPrimitiveType(): boolean;
     protected abstract getType(): JSONSchema7TypeName | undefined;
     protected abstract getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any;
-    protected getDefaultValue(schema: JSONSchema7, visitor: NodeVisitor): any {
+
+    protected getDefaultValue(schema: JSONSchema7, visitor: NodeVisitor, generatedValue?: any): any {
         if (schema.const !== undefined) {
             return schema.const;
         }
@@ -17,8 +18,9 @@ export abstract class TypeGenerator implements NodeGenerator {
         if (Array.isArray(schema.enum)) {
             return schema.enum[0];
         }
-        return this.getEmptyValue(schema, visitor);
+        return generatedValue === undefined ? this.getEmptyValue(schema, visitor) : generatedValue;
     }
+
     protected isRequired(schema: JSONSchema7, visitor: NodeVisitor): boolean {
         // check: { properties: { <name>: <SCHEMA> }, required: ["<name>"] }
         const property = getPropertyName(visitor);

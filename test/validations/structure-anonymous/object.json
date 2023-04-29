@@ -1,1 +1,9 @@
-{"field":{"subfieldA":0,"subfieldB":"","subfieldC":{"subsubfieldA":[]}}}
+{
+  "field": {
+    "subfieldA": 0,
+    "subfieldB": "",
+    "subfieldC": {
+      "subsubfieldA": []
+    }
+  }
+}

@@ -3,10 +3,10 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "ConfigurationModel": {
-      "additionalProperties": false,
       "properties": {
         "defaultLanguage": {
-          "$ref": "#/definitions/LanguageKey"
+          "$ref": "#/definitions/LanguageKey",
+          "default": "en-US"
         }
       },
       "required": [
@@ -15,7 +15,6 @@
       "type": "object"
     },
     "DataModel": {
-      "additionalProperties": false,
       "properties": {
         "entities": {
           "additionalProperties": {
@@ -30,11 +29,9 @@
       "type": "object"
     },
     "EditorModel": {
-      "additionalProperties": false,
       "type": "object"
     },
     "EntityModel": {
-      "additionalProperties": false,
       "properties": {
         "name": {
           "type": "string"
@@ -53,7 +50,6 @@
       "type": "object"
     },
     "EntityPropertyModel": {
-      "additionalProperties": false,
       "properties": {
         "name": {
           "type": "string"
@@ -89,7 +85,6 @@
       "type": "string"
     },
     "Model": {
-      "additionalProperties": false,
       "properties": {
         "configuration": {
           "$ref": "#/definitions/ConfigurationModel"
@@ -113,7 +108,6 @@
       "type": "object"
     },
     "UIModel": {
-      "additionalProperties": false,
       "properties": {
         "editors": {
           "additionalProperties": {
@@ -135,7 +129,6 @@
       "type": "object"
     },
     "ViewModel": {
-      "additionalProperties": false,
       "type": "object"
     }
   }

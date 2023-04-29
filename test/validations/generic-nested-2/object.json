@@ -1,1 +1,7 @@
-{"responseType":{"foo":{"lists":[]}}}
+{
+  "responseType": {
+    "foo": {
+      "lists": []
+    }
+  }
+}

@@ -19,8 +19,8 @@ interface TraceableNodeVisitor {
 
 export abstract class BaseNodeVisitor implements NodeVisitor, TraceableNodeVisitor {
     generate(path: string, replaceParent = false): any {
-        const newContext = new SubNodeVisitor(this, path);
-        return this.getNodeGenerator().generate(newContext.getSchema(), newContext);
+        const visitor = new SubNodeVisitor(this, path);
+        return this.getNodeGenerator().generate(visitor.getSchema(), visitor);
     }
 
     private resolveSchema(schema: any, property: string): JSONSchema7 | undefined {
@@ -30,7 +30,11 @@ export abstract class BaseNodeVisitor implements NodeVisitor, TraceableNodeVisit
                 currentSchema !== undefined && typeof currentSchema === "object" ? currentSchema[property] : undefined;
         }
         if (currentSchema && currentSchema.$ref !== undefined) {
-            currentSchema = this.getSchema(getRefPath(<string>currentSchema.$ref));
+            currentSchema = {
+                ...this.getSchema(getRefPath(<string>currentSchema.$ref)),
+                ...currentSchema,
+                $ref: undefined,
+            };
         }
         return currentSchema;
     }

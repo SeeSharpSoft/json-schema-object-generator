@@ -1,1 +1,5 @@
-{"a":"string","b":"number","c":"unknown"}
+{
+  "a": "string",
+  "b": "number",
+  "c": "unknown"
+}

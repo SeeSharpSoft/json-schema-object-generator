@@ -1,1 +1,30 @@
-{"b":0,"c":{"c":{"c":{"a":""}}},"someAlias":{"a":"alias","b":"alias","c":{"a":"alias"},"d":{"c":"alias"}},"someGeneric":{"a":1,"b":2,"c":{"a":1},"d":{"c":2}}}
+{
+  "b": 0,
+  "c": {
+    "c": {
+      "c": {
+        "a": ""
+      }
+    }
+  },
+  "someAlias": {
+    "a": "alias",
+    "b": "alias",
+    "c": {
+      "a": "alias"
+    },
+    "d": {
+      "c": "alias"
+    }
+  },
+  "someGeneric": {
+    "a": 1,
+    "b": 2,
+    "c": {
+      "a": 1
+    },
+    "d": {
+      "c": 2
+    }
+  }
+}

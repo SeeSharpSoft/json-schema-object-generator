@@ -1,1 +1,6 @@
-{"propA":0,"propB":0,"propC":0,"readonlyProp":""}
+{
+  "propA": 0,
+  "propB": 0,
+  "propC": 0,
+  "readonlyProp": ""
+}

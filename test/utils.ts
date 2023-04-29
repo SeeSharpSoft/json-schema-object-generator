@@ -18,13 +18,13 @@ export function assertGeneratedJsonObject(relativePath: string, dir = "validatio
 
     if (expectedObject === undefined) {
         expectedObject = generatedObject;
-        writeFileSync(basePath + "/object.json", JSON.stringify(generatedObject));
+        writeFileSync(basePath + "/object.json", JSON.stringify(generatedObject, null, 2));
     }
 
-    expect(JSON.stringify(generatedObject)).toEqual(JSON.stringify(expectedObject));
+    expect(JSON.stringify(generatedObject, null, 2)).toEqual(JSON.stringify(expectedObject, null, 2));
 }
 
-const validator = new Ajv({ strict: false });
+const validator = new Ajv({ strict: false, strictSchema: false, allErrors: false });
 addFormats(validator);
 
 export function assertValidityOfJsonObject(relativePath: string, options?: Record<string, any>): void {

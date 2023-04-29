@@ -31,29 +31,30 @@
   },
   "homepage": "https://github.com/seesharpsoft/ts-json-generator",
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@types/json-schema": "^7.0.7",
     "regex-to-strings": "^2.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.1",
-    "@babel/preset-env": "^7.13.5",
-    "@babel/preset-typescript": "^7.13.0",
-    "@types/node": "^14.14.34",
-    "@types/jest": "^26.0.20",
-    "@typescript-eslint/eslint-plugin": "^4.15.2",
-    "@typescript-eslint/parser": "^4.15.2",
-    "typescript": "^4.2.3",
-    "ajv": "^7.1.1",
-    "ajv-formats": "^1.5.1",
-    "jest": "^26.6.3",
-    "jest-junit": "^12.0.0",
-    "prettier": "^2.2.1",
-    "eslint": "^7.20.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-prettier": "^3.3.1"
+    "@babel/core": "^7.21.5",
+    "@babel/preset-env": "^7.21.5",
+    "@babel/preset-typescript": "^7.21.5",
+    "@types/node": "^18.16.3",
+    "@types/jest": "^29.5.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "typescript": "^5.0.4",
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
+    "jest": "^29.5.0",
+    "jest-junit": "^16.0.0",
+    "prettier": "^2.8.8",
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "ts-json-schema-generator": "^1.2.0"
   },
   "scripts": {
     "build": "tsc",
@@ -61,6 +62,7 @@
     "test": "jest test/",
     "test:coverage": "jest test/ --collectCoverage=true",
     "test:node": "mocha",
+    "test:generate-schema": "\"./node_modules/.bin/ts-json-schema-generator\" --path \"test/extra/model/model.ts\" --type \"Model\" --out \"test/extra/model/schema.json\" --additional-properties",
     "lint": "eslint {src,test}/**/*.ts",
     "format": "yarn lint --fix"
   }

@@ -12,9 +12,11 @@ import { BooleanGenerator } from "./generators/BooleanGenerator";
 import { NullTypeGenerator } from "./generators/NullTypeGenerator";
 import { AnyOfGenerator } from "./generators/AnyOfGenerator";
 
+export type GeneratorFunction = () => any;
+
 export interface NodeGenerator {
-    generate(schema: JSONSchema7, visitor: NodeVisitor): any;
-    handles(schema: JSONSchema7, context: NodeVisitor): boolean;
+    generate(schema: JSONSchema7, visitor: NodeVisitor, next?: GeneratorFunction): any;
+    handles(schema: JSONSchema7, visitor: NodeVisitor): boolean;
 }
 
 export interface MutableGenerator {
@@ -45,7 +47,7 @@ export function createNodeGenerator(augmentor?: NodeGeneratorAugmentor): NodeGen
     return nodeGenerator;
 }
 
-export class BaseNodeGenerator implements NodeGenerator, MutableGenerator {
+class BaseNodeGenerator implements NodeGenerator, MutableGenerator {
     readonly generators: NodeGenerator[];
 
     constructor() {
@@ -53,15 +55,19 @@ export class BaseNodeGenerator implements NodeGenerator, MutableGenerator {
     }
 
     handles(schema: JSONSchema7, visitor: NodeVisitor): boolean {
-        return !!this.findGenerator(schema, visitor);
+        return this.generators.some((generator) => generator.handles(schema, visitor));
     }
 
     generate(schema: JSONSchema7, visitor: NodeVisitor): any {
-        return this.findGenerator(schema, visitor)?.generate(schema, visitor);
-    }
-
-    findGenerator(schema: JSONSchema7, visitor: NodeVisitor): NodeGenerator | undefined {
-        return this.generators.find((generator) => generator.handles(schema, visitor));
+        const suitableGenerators = this.generators.filter((generator) => generator.handles(schema, visitor));
+        let index = 0;
+        const next = () => {
+            if (index < suitableGenerators.length) {
+                return suitableGenerators[index++].generate(schema, visitor, next);
+            }
+            return undefined;
+        };
+        return next();
     }
 
     addGenerator(generator: NodeGenerator): void {

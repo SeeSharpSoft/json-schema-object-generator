@@ -29,6 +29,6 @@ describe.each(
     test(`${relativePath}/schema.json`, () => assertValidityOfJsonObject(relativePath));
 });
 
-// describe("model", () => {
-//     it("complex", () => assertGeneratedJsonObject("model", "extra"));
-// });
+describe("model", () => {
+    it("complex", () => assertGeneratedJsonObject("model", "extra"));
+});

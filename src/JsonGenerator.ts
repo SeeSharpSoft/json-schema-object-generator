@@ -35,8 +35,8 @@ export class JsonGenerator {
     }
 
     generate(path?: string): any {
-        const generatorContext = new RootNodeVisitor(this.schema, this.config, <NodeGenerator>this.nodeGenerator, path);
-        return <NodeGenerator>this.nodeGenerator?.generate(this.schema, generatorContext);
+        const visitor = new RootNodeVisitor(this.schema, this.config, <NodeGenerator>this.nodeGenerator, path);
+        return <NodeGenerator>this.nodeGenerator?.generate(this.schema, visitor);
     }
 }
 

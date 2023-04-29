@@ -1,1 +1,10 @@
-{"subA":{"propA":0,"propB":0},"subB":{"propA":0,"propB":0}}
+{
+  "subA": {
+    "propA": 0,
+    "propB": 0
+  },
+  "subB": {
+    "propA": 0,
+    "propB": 0
+  }
+}

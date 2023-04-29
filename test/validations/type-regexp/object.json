@@ -1,1 +1,4 @@
-{"regexp":"[A-Z].+","regexpAlias":"[A-Z].+"}
+{
+  "regexp": "[A-Z].+",
+  "regexpAlias": "[A-Z].+"
+}

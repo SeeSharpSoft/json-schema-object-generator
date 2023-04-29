@@ -6,6 +6,9 @@ export type Model = {
 }
 
 export type ConfigurationModel = {
+    /**
+     * @default en-US
+     */
     defaultLanguage: LanguageKey;
 }
 
@@ -30,14 +33,14 @@ export type I18nModel = Record<LanguageKey, I18nTokenModel> & {
 }
 
 /**
- * pattern \w{2}(-\w{2,3})?
+ * @pattern \w{2}(-\w{2,3})?
  */
 export type LanguageKey = string;
 
 export type I18nTokenModel = Record<EntryKey, string>;
 
 /**
- * pattern \w+
+ * @pattern \w+
  */
 export type EntryKey = string;
 
