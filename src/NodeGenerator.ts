@@ -12,10 +12,10 @@ import { BooleanGenerator } from "./generators/BooleanGenerator";
 import { NullTypeGenerator } from "./generators/NullTypeGenerator";
 import { AnyOfGenerator } from "./generators/AnyOfGenerator";
 
-export type GeneratorFunction<T> = () => T;
+export type fnGenerate<T> = () => T;
 
 export interface NodeGenerator<T> {
-  generate(schema: JSONSchema7, visitor: NodeVisitor, next?: GeneratorFunction<T>): T;
+  generate(schema: JSONSchema7, visitor: NodeVisitor, next?: fnGenerate<T>): T;
   handles(schema: JSONSchema7, visitor: NodeVisitor): boolean;
 }
 
