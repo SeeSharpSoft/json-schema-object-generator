@@ -4,7 +4,7 @@ import { ResolvedConfig } from "./Config";
 import { getRefPath } from "./Utils";
 
 export interface NodeVisitor {
-  generate(path: string): any;
+  generate<T>(path: string): T;
 
   getConfig(): ResolvedConfig;
 
