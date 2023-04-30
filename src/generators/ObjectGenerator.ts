@@ -4,52 +4,52 @@ import { Config } from "../Config";
 import { TypeGenerator } from "./TypeGenerator";
 
 export class ObjectGenerator extends TypeGenerator {
-    protected getType(): JSONSchema7TypeName {
-        return "object";
-    }
+  protected getType(): JSONSchema7TypeName {
+    return "object";
+  }
 
-    generate(schema: JSONSchema7, visitor: NodeVisitor): any {
-        let obj = super.generate(schema, visitor);
-        if (obj !== undefined) {
-            obj = this.applySchema(
-                {
-                    ...obj,
-                    ...this.generateProperties(schema, visitor),
-                },
-                schema,
-                visitor.getConfig()
-            );
-        }
-        return obj;
+  generate(schema: JSONSchema7, visitor: NodeVisitor): any {
+    let obj = super.generate(schema, visitor);
+    if (obj !== undefined) {
+      obj = this.applySchema(
+        {
+          ...obj,
+          ...this.generateProperties(schema, visitor),
+        },
+        schema,
+        visitor.getConfig()
+      );
     }
+    return obj;
+  }
 
-    protected generateProperties(schema: JSONSchema7, visitor: NodeVisitor): any {
-        const result: any = {};
-        for (const key of Object.keys(schema.properties || {})) {
-            result[key] = visitor.generate("properties/" + key);
-        }
-        return result;
+  protected generateProperties(schema: JSONSchema7, visitor: NodeVisitor): any {
+    const result: any = {};
+    for (const key of Object.keys(schema.properties || {})) {
+      result[key] = visitor.generate("properties/" + key);
     }
+    return result;
+  }
 
-    protected applySchema(target: any, schema: JSONSchema7, config: Config): any {
-        switch (config.reflectionType) {
-            case "none":
-                break;
-            case "function":
-                target[config.reflectionName || "getSchema"] = () => schema;
-                break;
-            case "property":
-                Object.defineProperty(target, config.reflectionName || "$schema", { value: schema });
-                break;
-        }
-        return target;
+  protected applySchema(target: any, schema: JSONSchema7, config: Config): any {
+    switch (config.reflectionType) {
+      case "none":
+        break;
+      case "function":
+        target[config.reflectionName || "getSchema"] = () => schema;
+        break;
+      case "property":
+        Object.defineProperty(target, config.reflectionName || "$schema", { value: schema });
+        break;
     }
+    return target;
+  }
 
-    protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any {
-        return {};
-    }
+  protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any {
+    return {};
+  }
 
-    protected isPrimitiveType(): boolean {
-        return false;
-    }
+  protected isPrimitiveType(): boolean {
+    return false;
+  }
 }

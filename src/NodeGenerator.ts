@@ -15,66 +15,66 @@ import { AnyOfGenerator } from "./generators/AnyOfGenerator";
 export type GeneratorFunction = () => any;
 
 export interface NodeGenerator {
-    generate(schema: JSONSchema7, visitor: NodeVisitor, next?: GeneratorFunction): any;
-    handles(schema: JSONSchema7, visitor: NodeVisitor): boolean;
+  generate(schema: JSONSchema7, visitor: NodeVisitor, next?: GeneratorFunction): any;
+  handles(schema: JSONSchema7, visitor: NodeVisitor): boolean;
 }
 
 export interface MutableGenerator {
-    addGenerator(generator: NodeGenerator): void;
+  addGenerator(generator: NodeGenerator): void;
 }
 
 export type NodeGeneratorAugmentor = (parser: MutableGenerator) => void;
 
 export function createNodeGenerator(augmentor?: NodeGeneratorAugmentor): NodeGenerator {
-    const nodeGenerator = new BaseNodeGenerator();
-    if (augmentor) {
-        augmentor(nodeGenerator);
-    }
-    nodeGenerator.addGenerators(
-        new RefNodeGenerator(),
-        new AnyOfGenerator(),
-        new ObjectGenerator(),
-        new ArrayGenerator(),
-        new StringGenerator(),
-        new NumberGenerator(),
-        new IntegerGenerator(),
-        new BooleanGenerator(),
-        new NullTypeGenerator(),
-        new EmptyTypeGenerator(),
-        new UnknownObjectGenerator()
-    );
+  const nodeGenerator = new BaseNodeGenerator();
+  if (augmentor) {
+    augmentor(nodeGenerator);
+  }
+  nodeGenerator.addGenerators(
+    new RefNodeGenerator(),
+    new AnyOfGenerator(),
+    new ObjectGenerator(),
+    new ArrayGenerator(),
+    new StringGenerator(),
+    new NumberGenerator(),
+    new IntegerGenerator(),
+    new BooleanGenerator(),
+    new NullTypeGenerator(),
+    new EmptyTypeGenerator(),
+    new UnknownObjectGenerator()
+  );
 
-    return nodeGenerator;
+  return nodeGenerator;
 }
 
 class BaseNodeGenerator implements NodeGenerator, MutableGenerator {
-    readonly generators: NodeGenerator[];
+  readonly generators: NodeGenerator[];
 
-    constructor() {
-        this.generators = [];
-    }
+  constructor() {
+    this.generators = [];
+  }
 
-    handles(schema: JSONSchema7, visitor: NodeVisitor): boolean {
-        return this.generators.some((generator) => generator.handles(schema, visitor));
-    }
+  handles(schema: JSONSchema7, visitor: NodeVisitor): boolean {
+    return this.generators.some((generator) => generator.handles(schema, visitor));
+  }
 
-    generate(schema: JSONSchema7, visitor: NodeVisitor): any {
-        const suitableGenerators = this.generators.filter((generator) => generator.handles(schema, visitor));
-        let index = 0;
-        const next = () => {
-            if (index < suitableGenerators.length) {
-                return suitableGenerators[index++].generate(schema, visitor, next);
-            }
-            return undefined;
-        };
-        return next();
-    }
+  generate(schema: JSONSchema7, visitor: NodeVisitor): any {
+    const suitableGenerators = this.generators.filter((generator) => generator.handles(schema, visitor));
+    let index = 0;
+    const next = () => {
+      if (index < suitableGenerators.length) {
+        return suitableGenerators[index++].generate(schema, visitor, next);
+      }
+      return undefined;
+    };
+    return next();
+  }
 
-    addGenerator(generator: NodeGenerator): void {
-        this.generators.push(generator);
-    }
+  addGenerator(generator: NodeGenerator): void {
+    this.generators.push(generator);
+  }
 
-    addGenerators(...generators: NodeGenerator[]): void {
-        generators.forEach(this.addGenerator.bind(this));
-    }
+  addGenerators(...generators: NodeGenerator[]): void {
+    generators.forEach(this.addGenerator.bind(this));
+  }
 }

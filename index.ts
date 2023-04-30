@@ -1,5 +1,5 @@
 export * from "./src/Config";
-export * from "./src/JsonGenerator";
+export * from "./src/Generator";
 export * from "./src/NodeGenerator";
 export * from "./src/NodeVisitor";
 

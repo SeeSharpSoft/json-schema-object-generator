@@ -3,11 +3,11 @@ import { NodeVisitor } from "../NodeVisitor";
 import { PrimitiveTypeGenerator } from "./PrimitiveTypeGenerator";
 
 export class NumberGenerator extends PrimitiveTypeGenerator {
-    protected getType(): JSONSchema7TypeName {
-        return "number";
-    }
+  protected getType(): JSONSchema7TypeName {
+    return "number";
+  }
 
-    protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any {
-        return 0;
-    }
+  protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any {
+    return 0;
+  }
 }

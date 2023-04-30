@@ -63,7 +63,7 @@
     "test:coverage": "jest test/ --collectCoverage=true",
     "test:node": "mocha",
     "test:generate-schema": "\"./node_modules/.bin/ts-json-schema-generator\" --path \"test/extra/model/model.ts\" --type \"Model\" --out \"test/extra/model/schema.json\" --additional-properties",
-    "lint": "eslint {src,test}/**/*.ts",
-    "format": "yarn lint --fix"
+    "lint": "eslint {src,test}/**/*.*",
+    "format": "eslint {src,test}/**/*.ts --fix"
   }
 }
