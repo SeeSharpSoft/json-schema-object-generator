@@ -3,20 +3,20 @@ import { NodeVisitor } from "../NodeVisitor";
 import { JSONSchema7, JSONSchema7TypeName } from "json-schema";
 import { getObjectSchema, getPropertyName, getSchemaType } from "../Utils";
 
-export abstract class TypeGenerator implements NodeGenerator {
+export abstract class TypeGenerator<T> implements NodeGenerator<T> {
   protected abstract isPrimitiveType(): boolean;
   protected abstract getType(): JSONSchema7TypeName | undefined;
   protected abstract getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any;
 
-  protected getDefaultValue(schema: JSONSchema7, visitor: NodeVisitor, generatedValue?: any): any {
+  protected getDefaultValue(schema: JSONSchema7, visitor: NodeVisitor, generatedValue?: T): T {
     if (schema.const !== undefined) {
-      return schema.const;
+      return schema.const as T;
     }
     if (schema.default !== undefined) {
-      return schema.default;
+      return schema.default as T;
     }
     if (Array.isArray(schema.enum)) {
-      return schema.enum[0];
+      return schema.enum[0] as T;
     }
     return generatedValue === undefined ? this.getEmptyValue(schema, visitor) : generatedValue;
   }
@@ -39,12 +39,12 @@ export abstract class TypeGenerator implements NodeGenerator {
     return schemaType === targetType;
   }
 
-  generate(schema: JSONSchema7, visitor: NodeVisitor): any {
+  generate(schema: JSONSchema7, visitor: NodeVisitor): T {
     if (schema.const !== undefined && visitor.getConfig().generateConst === "always") {
-      return schema.const;
+      return schema.const as T;
     }
     if (schema.default !== undefined && visitor.getConfig().generateDefault === "always") {
-      return schema.default;
+      return schema.default as T;
     }
     if (
       this.isRequired(schema, visitor) ||
@@ -52,6 +52,6 @@ export abstract class TypeGenerator implements NodeGenerator {
     ) {
       return this.getDefaultValue(schema, visitor);
     }
-    return undefined;
+    return undefined as T;
   }
 }

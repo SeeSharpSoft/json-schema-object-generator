@@ -3,12 +3,12 @@ import { JSONSchema7, JSONSchema7TypeName } from "json-schema";
 import { Config } from "../Config";
 import { TypeGenerator } from "./TypeGenerator";
 
-export class ObjectGenerator extends TypeGenerator {
+export class ObjectGenerator extends TypeGenerator<NonNullable<unknown>> {
   protected getType(): JSONSchema7TypeName {
     return "object";
   }
 
-  generate(schema: JSONSchema7, visitor: NodeVisitor): any {
+  generate(schema: JSONSchema7, visitor: NodeVisitor): NonNullable<unknown> {
     let obj = super.generate(schema, visitor);
     if (obj !== undefined) {
       obj = this.applySchema(
@@ -23,7 +23,7 @@ export class ObjectGenerator extends TypeGenerator {
     return obj;
   }
 
-  protected generateProperties(schema: JSONSchema7, visitor: NodeVisitor): any {
+  protected generateProperties(schema: JSONSchema7, visitor: NodeVisitor): NonNullable<unknown> {
     const result: any = {};
     for (const key of Object.keys(schema.properties || {})) {
       result[key] = visitor.generate("properties/" + key);
@@ -31,7 +31,7 @@ export class ObjectGenerator extends TypeGenerator {
     return result;
   }
 
-  protected applySchema(target: any, schema: JSONSchema7, config: Config): any {
+  protected applySchema(target: any, schema: JSONSchema7, config: Config): NonNullable<unknown> {
     switch (config.reflectionType) {
       case "none":
         break;
@@ -45,7 +45,7 @@ export class ObjectGenerator extends TypeGenerator {
     return target;
   }
 
-  protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any {
+  protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): NonNullable<unknown> {
     return {};
   }
 

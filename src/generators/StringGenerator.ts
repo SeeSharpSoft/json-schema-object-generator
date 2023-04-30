@@ -3,12 +3,12 @@ import { NodeVisitor } from "../NodeVisitor";
 import { PrimitiveTypeGenerator } from "./PrimitiveTypeGenerator";
 import { expandN } from "regex-to-strings";
 
-export class StringGenerator extends PrimitiveTypeGenerator {
+export class StringGenerator extends PrimitiveTypeGenerator<string> {
   protected getType(): JSONSchema7TypeName {
     return "string";
   }
 
-  protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any {
+  protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): string {
     if (schema.pattern !== undefined) {
       return expandN(RegExp(schema.pattern), 1)[0];
     }

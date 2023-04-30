@@ -2,7 +2,7 @@ import { JSONSchema7, JSONSchema7TypeName } from "json-schema";
 import { NodeVisitor } from "../NodeVisitor";
 import { TypeGenerator } from "./TypeGenerator";
 
-export class ArrayGenerator extends TypeGenerator {
+export class ArrayGenerator extends TypeGenerator<Array<unknown>> {
   protected isRequired(schema: JSONSchema7, visitor: NodeVisitor): boolean {
     return super.isRequired(schema, visitor) || schema.minItems !== undefined;
   }
@@ -11,7 +11,7 @@ export class ArrayGenerator extends TypeGenerator {
     return "array";
   }
 
-  protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): any {
+  protected getEmptyValue(schema: JSONSchema7, visitor: NodeVisitor): Array<unknown> {
     const arr = [];
     const items = schema.items;
     const isArray = Array.isArray(items);

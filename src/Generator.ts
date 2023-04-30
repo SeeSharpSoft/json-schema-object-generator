@@ -3,14 +3,34 @@ import { BaseNodeVisitor } from "./NodeVisitor";
 import { JSONSchema7, JSONSchema7TypeName } from "json-schema";
 import { Config, DEFAULT_CONFIG, ResolvedConfig } from "./Config";
 
+export type GeneratorParameter = {
+  schema: JSONSchema7;
+  config?: Config;
+  nodeGenerator?: NodeGenerator<unknown>;
+};
+
+function isGeneratorParameter(value: JSONSchema7 | GeneratorParameter): value is GeneratorParameter {
+  return "schema" in value;
+}
+
 export class Generator {
   protected readonly config: ResolvedConfig;
+  protected readonly schema: JSONSchema7;
+  protected readonly nodeGenerator: NodeGenerator<unknown>;
 
-  constructor(
-    protected readonly schema: JSONSchema7,
-    config?: Config,
-    protected readonly nodeGenerator: NodeGenerator = createNodeGenerator()
-  ) {
+  constructor(schema: JSONSchema7);
+  constructor(parameter: GeneratorParameter);
+  constructor(readonly schemaOrParameter: JSONSchema7 | GeneratorParameter) {
+    const { schema, config, nodeGenerator } = isGeneratorParameter(schemaOrParameter)
+      ? schemaOrParameter
+      : {
+          schema: schemaOrParameter,
+          config: undefined,
+          nodeGenerator: undefined,
+        };
+
+    this.schema = schema;
+    this.nodeGenerator = nodeGenerator || createNodeGenerator();
     this.config = Generator.resolveConfig(config);
   }
 
@@ -34,9 +54,9 @@ export class Generator {
     return resolvedConfig;
   }
 
-  generate(path?: string): any {
-    const visitor = new RootNodeVisitor(this.schema, this.config, <NodeGenerator>this.nodeGenerator, path);
-    return <NodeGenerator>this.nodeGenerator?.generate(this.schema, visitor);
+  generate(path?: string): unknown {
+    const visitor = new RootNodeVisitor(this.schema, this.config, this.nodeGenerator, path);
+    return this.nodeGenerator?.generate(this.schema, visitor);
   }
 }
 
@@ -44,7 +64,7 @@ class RootNodeVisitor extends BaseNodeVisitor {
   constructor(
     protected readonly schema: JSONSchema7,
     protected readonly config: ResolvedConfig,
-    protected readonly nodeGenerator: NodeGenerator,
+    protected readonly nodeGenerator: NodeGenerator<unknown>,
     protected readonly path: string = "/"
   ) {
     super();
@@ -54,8 +74,8 @@ class RootNodeVisitor extends BaseNodeVisitor {
     return this.schema;
   }
 
-  getNodeGenerator(): NodeGenerator {
-    return this.nodeGenerator;
+  getNodeGenerator<T>(): NodeGenerator<T> {
+    return this.nodeGenerator as NodeGenerator<T>;
   }
 
   getConfig(): ResolvedConfig {

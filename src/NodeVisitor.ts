@@ -76,7 +76,7 @@ export abstract class BaseNodeVisitor implements NodeVisitor, TraceableNodeVisit
 
   abstract getLocalPath(): string;
 
-  abstract getNodeGenerator(): NodeGenerator;
+  abstract getNodeGenerator<T>(): NodeGenerator<T>;
 
   abstract visited(path: string): boolean;
 
@@ -116,7 +116,7 @@ class SubNodeVisitor extends BaseNodeVisitor {
     return this.parentVisitor.getPath() + (this.relativePath ? this.relativePath + "/" : "");
   }
 
-  getNodeGenerator(): NodeGenerator {
+  getNodeGenerator<T>(): NodeGenerator<T> {
     return this.parentVisitor.getNodeGenerator();
   }
 

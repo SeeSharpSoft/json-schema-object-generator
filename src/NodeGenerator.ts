@@ -12,20 +12,20 @@ import { BooleanGenerator } from "./generators/BooleanGenerator";
 import { NullTypeGenerator } from "./generators/NullTypeGenerator";
 import { AnyOfGenerator } from "./generators/AnyOfGenerator";
 
-export type GeneratorFunction = () => any;
+export type GeneratorFunction<T> = () => T;
 
-export interface NodeGenerator {
-  generate(schema: JSONSchema7, visitor: NodeVisitor, next?: GeneratorFunction): any;
+export interface NodeGenerator<T> {
+  generate(schema: JSONSchema7, visitor: NodeVisitor, next?: GeneratorFunction<T>): T;
   handles(schema: JSONSchema7, visitor: NodeVisitor): boolean;
 }
 
 export interface MutableGenerator {
-  addGenerator(generator: NodeGenerator): void;
+  addGenerator(generator: NodeGenerator<unknown>): void;
 }
 
 export type NodeGeneratorAugmentor = (parser: MutableGenerator) => void;
 
-export function createNodeGenerator(augmentor?: NodeGeneratorAugmentor): NodeGenerator {
+export function createNodeGenerator(augmentor?: NodeGeneratorAugmentor): NodeGenerator<unknown> {
   const nodeGenerator = new BaseNodeGenerator();
   if (augmentor) {
     augmentor(nodeGenerator);
@@ -47,8 +47,8 @@ export function createNodeGenerator(augmentor?: NodeGeneratorAugmentor): NodeGen
   return nodeGenerator;
 }
 
-class BaseNodeGenerator implements NodeGenerator, MutableGenerator {
-  readonly generators: NodeGenerator[];
+class BaseNodeGenerator implements NodeGenerator<unknown>, MutableGenerator {
+  readonly generators: NodeGenerator<unknown>[];
 
   constructor() {
     this.generators = [];
@@ -58,7 +58,7 @@ class BaseNodeGenerator implements NodeGenerator, MutableGenerator {
     return this.generators.some((generator) => generator.handles(schema, visitor));
   }
 
-  generate(schema: JSONSchema7, visitor: NodeVisitor): any {
+  generate(schema: JSONSchema7, visitor: NodeVisitor): unknown {
     const suitableGenerators = this.generators.filter((generator) => generator.handles(schema, visitor));
     let index = 0;
     const next = () => {
@@ -70,11 +70,11 @@ class BaseNodeGenerator implements NodeGenerator, MutableGenerator {
     return next();
   }
 
-  addGenerator(generator: NodeGenerator): void {
+  addGenerator(generator: NodeGenerator<unknown>): void {
     this.generators.push(generator);
   }
 
-  addGenerators(...generators: NodeGenerator[]): void {
+  addGenerators(...generators: NodeGenerator<unknown>[]): void {
     generators.forEach(this.addGenerator.bind(this));
   }
 }
