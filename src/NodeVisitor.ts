@@ -34,6 +34,7 @@ export abstract class BaseNodeVisitor implements NodeVisitor, TraceableNodeVisit
         ...this.getSchema(getRefPath(<string>currentSchema.$ref)),
         ...currentSchema,
         $ref: undefined,
+        $id: currentSchema.$ref,
       };
     }
     return currentSchema;
