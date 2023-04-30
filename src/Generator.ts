@@ -54,9 +54,9 @@ export class Generator {
     return resolvedConfig;
   }
 
-  generate(path?: string): unknown {
+  generate<T>(path?: string): T {
     const visitor = new RootNodeVisitor(this.schema, this.config, this.nodeGenerator, path);
-    return this.nodeGenerator?.generate(this.schema, visitor);
+    return this.nodeGenerator?.generate(this.schema, visitor) as T;
   }
 }
 
