@@ -27,22 +27,22 @@ export type NodeGeneratorAugmentor = (parser: MutableGenerator) => void;
 
 export function createNodeGenerator(augmentor?: NodeGeneratorAugmentor): NodeGenerator<unknown> {
   const nodeGenerator = new BaseNodeGenerator();
+  nodeGenerator.addGenerators(
+    new UnknownObjectGenerator(),
+    new EmptyTypeGenerator(),
+    new NullTypeGenerator(),
+    new BooleanGenerator(),
+    new IntegerGenerator(),
+    new NumberGenerator(),
+    new StringGenerator(),
+    new ArrayGenerator(),
+    new ObjectGenerator(),
+    new AnyOfGenerator(),
+    new RefNodeGenerator()
+  );
   if (augmentor) {
     augmentor(nodeGenerator);
   }
-  nodeGenerator.addGenerators(
-    new RefNodeGenerator(),
-    new AnyOfGenerator(),
-    new ObjectGenerator(),
-    new ArrayGenerator(),
-    new StringGenerator(),
-    new NumberGenerator(),
-    new IntegerGenerator(),
-    new BooleanGenerator(),
-    new NullTypeGenerator(),
-    new EmptyTypeGenerator(),
-    new UnknownObjectGenerator()
-  );
 
   return nodeGenerator;
 }
@@ -60,10 +60,10 @@ class BaseNodeGenerator implements NodeGenerator<unknown>, MutableGenerator {
 
   generate(schema: JSONSchema7, visitor: NodeVisitor): unknown {
     const suitableGenerators = this.generators.filter((generator) => generator.handles(schema, visitor));
-    let index = 0;
+    let index = suitableGenerators.length;
     const next = () => {
-      if (index < suitableGenerators.length) {
-        return suitableGenerators[index++].generate(schema, visitor, next);
+      if (index > 0) {
+        return suitableGenerators[--index].generate(schema, visitor, next);
       }
       return undefined;
     };
